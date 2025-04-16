@@ -1,7 +1,20 @@
 import urllib.request
 import json
 import time
+import subprocess
+import platform
 
+# دالة تنظيف التيرمنال
+def clear_screen():
+    try:
+        if platform.system() == "Windows":
+            subprocess.call("cls", shell=True)
+        else:
+            subprocess.call("clear", shell=True)
+    except Exception as e:
+        print(f"[!] Could not clear screen: {e}")
+
+# الشعار
 def banner():
     print(r"""
 ██████╗  ██████╗  ██████╗ ███████╗
@@ -13,6 +26,8 @@ def banner():
          Made with 💀 by Abudi
         [boos] Email Finder Tool
 """)
+
+# باقي الكود ما تغير، نكمل بنفس الطريقة...
 
 def get_json(url):
     try:
@@ -59,26 +74,22 @@ def check_instagram(username):
     return []
 
 def main():
+    clear_screen()  # يمسح الشاشة
     banner()
 
     print("\nStarting tool...")
-    time.sleep(2)  # Wait for 2 seconds to create suspense
+    time.sleep(2)
 
-    # Prompt for username
     username = input("\nEnter your username: ")
     print("\nStarting search... Please wait.")
 
     results = []
-    
-    # Begin search
     results += search_github(username)
     results += search_gravatar(username)
     results += check_instagram(username)
 
-    # Remove duplicates from results
     results = list(set(results))
 
-    # Display results
     print("\n=== Search Results ===")
     if results:
         for item in results:
@@ -88,3 +99,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
